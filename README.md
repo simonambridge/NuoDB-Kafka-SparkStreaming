@@ -12,7 +12,7 @@ How to use modern, real-time, distributed SQL and streaming technologies to buil
 
 <p>
 <p align="center">
-  <img src="architecture-1.png"/>
+  <img src="NCFP-architecture.png"/>
 </p>
 
 
