@@ -6,8 +6,6 @@ How to use modern, real-time, distributed SQL and streaming technologies to buil
 - Spark
 - Scala
 - Akka
-- Solr
-- Banana
 - Zeppelin
 
 <p>
@@ -17,7 +15,7 @@ How to use modern, real-time, distributed SQL and streaming technologies to buil
 
 
 ## Use Case 
-A large bank wants to monitor its customers creditcard transactions to detect and deter fraud attempts. They want the ability to search and group transactions by credit card, period, merchant, credit card provider, amounts, status etc.
+A large bank wants to monitor its customers credit card transactions to detect and deter fraud attempts. They want the ability to search and group transactions by credit card, period, merchant, credit card provider, amounts, status etc.
 
 The client wants a REST API to:  
 
@@ -60,15 +58,15 @@ When the Node.js ReST service has been created:
 
 
 
-<h2>Clone the NCFP repository</h2>
+## Clone the NCFP repository
 
-The first step is to clone this repo to a directory on the machine where you installed NuoDB:
+The first step is to clone this repo to a directory on the machine where you have previously installed NuoDB as described above:
 ```
 $ git clone https://github.com/simonambridge/NCFP
 ```
 
 
-<h2>Data Model</h2>
+## Data Model
 
 To create this schema and the tables described below, run the create schema script:
 ```
@@ -76,7 +74,7 @@ nuosql <db-name> --user <username> --password <password>
 ```
 
 For example:
-To create this schema and the tables described below, run the create schema script:
+To create the application schema run the create schema script:
 ```
 nuosql hockey --user dba --password dba
 ```
@@ -129,7 +127,7 @@ The roll-up tables are empty at this point - they get populated using the Spark 
 
 
 
-### Searching with SQL
+## Searching with SQL
 
 Structured Query Language (SQL) allows you to search for data in the database tables that were created above.
 
@@ -164,7 +162,7 @@ These samples demonstrate that full, ad-hoc search on any of the transaction fie
 
 Queries like this will be used to build the ReST interface. 
 
-You can use SQLsh to explore the list of provided ReST queries here: http://github.com/simonambridge/NCFP/tree/master/SQL_Queries.md 
+You can use SQL to explore the list of provided ReST queries here: http://github.com/simonambridge/NCFP/tree/master/SQL_Queries.md 
 
 
 
@@ -180,7 +178,7 @@ The streaming analytics element of this application is made up of two parts:
 * A transaction "producer" - a Scala/Akka app that generates random credit card transactions and then places those transactions onto a Kafka queue. 
 * A transaction "consumer" - also written in Scala, is a Spark streaming job that 
 (a) consumes the messages put on the Kafka queue, and then 
-(b) parses those messages, evalutes the transaction status and then writes them to the Datastax/NuoDB table `transactions`. 
+(b) parses those messages, evalutes the transaction status and then writes them to the NuoDB table `transactions`. 
 It also generates rolling summary lines into the `txn_count_min` table every minute.
 
 Streaming analytics code can be found under the directory `TransactionHandlers/producer` (pre-requisite: make sure you have run the SQL schema create script as described above to create the necessary tables).
@@ -216,20 +214,16 @@ The instructions for setting up the ReST Server are described here: http://githu
 
 ## SimpleDriver 
 
-Running a NuoDB-stress test with the appropriate YAML profile for the table helps show how NuoDB will perform in terms of latency and throughput for writes and reads to/from the system.
-
-You can read more about using stress yamls to stress test a data model  [here](http://www.datastax.com/dev/blog/improved-NuoDB-2-1-stress-tool-benchmark-any-schema) and [here](http://docs.datastax.com/en/NuoDB/2.1/NuoDB/tools/toolsCStress_t.html).
-
-The stress YAML files are in the [stress_yamls directory](https://github.com/simonambridge/NCFP/tree/master/stress_yamls).
+Running a NuoDB performance test tool helps show how NuoDB will perform in terms of latency and throughput for writes and reads to/from the system.
 
 The stress tool will inject synthetic data so we will use a different table specifically for the stress testing.
 
-When you originally ran the ```creates_and_inserts.SQL``` script to create the transaction and rollup tables you also created the dummy table ```txn_by_cc``` that will be used by NuoDB-stress.
+When you originally ran the ```creates_and_inserts.SQL``` script to create the transaction and rollup tables you also created the dummy table ```txn_by_cc``` that will be used by SimpleDriver.
 
-The YAML tries to mirror real data, for example: month is a value between 1 and 12, year is between 2010 and 2016, credit card number is 16 characters in length, etc. The text fields are filled with unreadable gibberish :)
+SimpleDriver can generate synthetic 'real' data, for example: month is a value between 1 and 12, year is between 2010 and 2020, credit card number is 16 characters in length, etc. The text fields are filled with random text.
 
-NuoDB-stress generates a lot of output as it repeatedly runs the write test (10,000 records) while increasing the number of threads. This allows you to view the optimum number of threads required to run the task.
+SimpleDriver can be run repeatedly varying number of threads, batch counts etc. This allows you to determine the optimum number of threads required to optimally run the task.
 
 
-<sub>Acknowldegements: Based on the original RTFAP created with help from colleagues at DataStax.
+<sub>Acknowldegements: Based on the original project created with help from colleagues at DataStax.
 <BR>NCFP now has a Node.js/D3 ReST interface replacing Java, enhanced producer/consumer codebase, new roll-up reports, real time charts, a new demo ReST UI, improved documentation, etc</sub>
