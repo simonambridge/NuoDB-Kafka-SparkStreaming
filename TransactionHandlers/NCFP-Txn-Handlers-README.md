@@ -35,26 +35,20 @@ NB this demo is built using Spark Direct Streams (Kafka in this demo)
   2. Apache Kafka 2.4.0, I used the Scala 2.11 build
   3. Apache Spark 2.4.4
   4. Akka 2.6.1
-  4. sbt (Scala Build Tool) 1.3.5
-  5. An internet connection, required to download dependencies
+  5. sbt (Scala Build Tool) 1.3.5
+  6. An internet connection, required to download dependencies
 
 
->>>>>>>>> Details of NuoDB set up URL <<<<<<<<<<<<<<<<
 
 ## 2. Installing and Using Apache Kafka
-========================
-| Go to Kafka Install. |
-========================
+
+https://github.com/simonambridge/NCFP/blob/master/TransactionHandlers/NCFP-Kafka-Install.md
 
 ## 3. Installing and Using Apache Spark
 
-========================
-| Go to Spark Install. |
-========================
+https://github.com/simonambridge/NCFP/blob/master/TransactionHandlers/NCFP-Spark-Install.md
 
 ## 4. Install SBT (Scala Build Tool) and build the demo
-
-### Pre-requisite: Install sbt
 
 If you havent done it already, install sbt (as root or use sudo). You will need sbt to compile the streaming and batch services written in Scala.
 
