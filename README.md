@@ -17,9 +17,9 @@ This demo will use these technologies:
 
 ## Background 
 
-Global payment card losses in 2018 amounted to almost $25 billion. The United States was by far the leading payment fraud prone country accounting for 38.6% of total reported card losses (https://shiftprocessing.com/credit-card-fraud-statistics/).
+Payment card fraud is a growing and global problem. Payment card losses across the globe in 2018 amounted to almost $25 billion. The United States was by far the leading payment fraud prone country accounting for 38.6% of total reported card losses (https://shiftprocessing.com/credit-card-fraud-statistics/).
 
-In September 2018, the European Central Bank (ECB) published its ‘Fifth Report on Card Fraud’ stating that the total level of European card fraud losses amounted to $1.8 billion, with the UK accounting for half of those losses. The vast majority of the UK’s losses came from card-not-present (CNP) transactions.
+The ‘Fifth Report on Card Fraud’ from the European Central Bank (ECB) stated that the total level of European card fraud losses in 2018 amounted to $1.8 billion, with the UK accounting for half of those losses. The vast majority of the UK’s losses came from card-not-present (CNP) transactions.
 
 ## Use Case 
 
