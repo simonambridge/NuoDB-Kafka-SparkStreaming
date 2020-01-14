@@ -1,6 +1,7 @@
 # NuoDB Real-time Card Fraud Analysis Platform
 
-How to use modern, real-time, distributed SQL and streaming technologies to build a working model of a scalable fraud-detection platform. This demo will use these technologies:
+How to use modern, real-time, distributed SQL and streaming technologies to build a working model of a scalable fraud-detection platform. 
+This demo will use these technologies:
 
 - NuoDB
 - Spark
@@ -14,27 +15,26 @@ How to use modern, real-time, distributed SQL and streaming technologies to buil
 </p>
 
 
+## Background 
+
+Global payment card losses in 2018 amounted to almost $25 billion. The United States was by far the leading payment fraud prone country accounting for 38.6% of total reported card losses (https://shiftprocessing.com/credit-card-fraud-statistics/).
+
+In September 2018, the European Central Bank (ECB) published its ‘Fifth Report on Card Fraud’ stating that the total level of European card fraud losses amounted to $1.8 billion, with the UK accounting for half of those losses. The vast majority of the UK’s losses came from card-not-present (CNP) transactions.
+
 ## Use Case 
-A large bank wants to monitor its customers credit card transactions to detect and deter fraud attempts. They want the ability to search and group transactions by credit card, period, merchant, credit card provider, amounts, status etc.
 
-The client wants a REST API to:  
+In order to combat this a payment provider wants to monitor credit card transactions to detect and deter fraud attempts with the ability to search and group transactions by credit card, period, merchant, credit card provider, amounts, status etc.
 
-- Identify all transactions tagged as fraudulent in the last minute/day/month/year.
-- Identify all transactions tagged as fraudulent for a specific card.
-- Report all transactions for a merchant on a specific day.
-- Provide a roll-up report of transactions by card and year.
-- Provide a search capability to search the entire transaction database by merchant, cc_no, amounts.
-- Display the ratio of transaction success based on the first 6 digits of their credit card no.     
-- Display the ratio of confirmed transactions against fraudulent transactions in the last minute.
-- Display the moving ratio of approved transactions per minute, per hour.
-- Display the count of approved transactions per minute, per hour.
 
-They also want a graphic visualisation - a dashboard - of the data.
+The solution must be able to identify all transactions tagged as fraudulent both in real-time and historically.
 
-## Performance SLAs:
-- The client wants an assurance that the data model can handle 1,000 transactions a second with stable latencies.
-- The client currently handles accounts for over 15000 merchants and hopes to grow to 50,000 in a year.
+It must also provide flexible query capabilities allowing reporting of all transactions for specific cards and merchants.
 
+It must display the moving ratio of successful versus fraudulent transactions
+
+
+## Performance Guarantee
+- The solution must demonstrate that the system can support 1,000 transactions a second with stable latencies.
 
 ## Pre-Requisites
   * A NuoDB 4.x database to run your queries against.
@@ -162,7 +162,7 @@ These samples demonstrate that full, ad-hoc search on any of the transaction fie
 
 Queries like this will be used to build the ReST interface. 
 
-You can use SQL to explore the list of provided ReST queries here: http://github.com/simonambridge/NCFP/tree/master/SQL_Queries.md 
+You can use SQL to explore the list of provided ReST queries here: https://github.com/simonambridge/NCFP/blob/master/SQL/SQL_Queries.md
 
 
 
@@ -183,7 +183,7 @@ It also generates rolling summary lines into the `txn_count_min` table every min
 
 Streaming analytics code can be found under the directory `TransactionHandlers/producer` (pre-requisite: make sure you have run the SQL schema create script as described above to create the necessary tables).
 
-Follow the Spark streaming installation and set up instructions here: https://github.com/simonambridge/NCFP/tree/master/TransactionHandlers/README.md
+Follow the Spark streaming installation and set up instructions here: https://github.com/simonambridge/NCFP/blob/master/TransactionHandlers/NCFP-Txn-Handlers-README.md
 
 
 ### Batch Analytics
@@ -216,9 +216,9 @@ The instructions for setting up the ReST Server are described here: http://githu
 
 Running a NuoDB performance test tool helps show how NuoDB will perform in terms of latency and throughput for writes and reads to/from the system.
 
-The stress tool will inject synthetic data so we will use a different table specifically for the stress testing.
+The stress tool will inject synthetic data, so we will use a different table specifically for the stress testing.
 
-When you originally ran the ```creates_and_inserts.SQL``` script to create the transaction and rollup tables you also created the dummy table ```txn_by_cc``` that will be used by SimpleDriver.
+The schema crteation script ```creates_and_inserts.SQL``` also creates the dummy table ```txn_by_cc``` that will be used by SimpleDriver for the performance testing.
 
 SimpleDriver can generate synthetic 'real' data, for example: month is a value between 1 and 12, year is between 2010 and 2020, credit card number is 16 characters in length, etc. The text fields are filled with random text.
 
