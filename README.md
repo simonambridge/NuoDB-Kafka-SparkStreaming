@@ -36,13 +36,13 @@ In order to combat this a payment provider wants to monitor credit card transact
 - The solution must demonstrate that the system can support 1,000 transactions a second with stable latencies.
 
 ## Step 1: Install Pre-Requisites
-  * A NuoDB 4.x database to run your queries against.
-  ** Hardware and software requirements for NuoDB are listed here - http://doc.nuodb.com/Latest/Content/System-Requirements.htm
-  ** Installation and Deployment options are described here - http://doc.nuodb.com/Latest/Content/Deployment-models.htm
-  ** You can download the NuoDB Community Edition binaries for various platforms here - https://www.nuodb.com/dev-center/community-edition-download
-  * A machine on which to install Kafka, Spark and Zeppelin
-  ** This could be one of the NuoDB Transaction Engines (TE's), or a separate machine/cloud instance, or even a laptop
-  ** Ideally these services should be in close proximity to the data source in order to reduce latency
+  - A NuoDB 4.x database to run your queries against.
+  -- Hardware and software requirements for NuoDB are listed here - http://doc.nuodb.com/Latest/Content/System-Requirements.htm
+  -- Installation and Deployment options are described here - http://doc.nuodb.com/Latest/Content/Deployment-models.htm
+  -- You can download the NuoDB Community Edition binaries for various platforms here - https://www.nuodb.com/dev-center/community-edition-download
+  - A machine on which to install Kafka, Spark and Zeppelin
+  -- This could be one of the NuoDB Transaction Engines (TE's), or a separate machine/cloud instance, or even a laptop
+  -- Ideally these services should be in close proximity to the data source in order to reduce latency
 
 This demo uses an installation running on AWS
 
