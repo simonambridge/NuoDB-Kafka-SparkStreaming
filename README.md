@@ -85,19 +85,13 @@ SQL> @creates_and_inserts.sql
 
 This creates the following tables:
 
-- Table Transactions - main transactions table
-
-- Table hourlyaggregates_bycc - hourly roll-up of transactions by credit card
-
-- Table dailyaggregates_bycc - daily roll-up of transactions by credit card
-
-- Table monthlyaggregates_bycc - monthly roll-up of transactions by credit card
-
-- Table yearlyaggregates_bycc - yearly roll-up of transactions by credit card
-
-- Table dailytxns_bymerchant - daily roll-up of transactions by merchant
-
-- Table txn_count_min - track transactions in a rolling window for analytics
+- transactions           - the main transactions table
+- hourlyaggregates_bycc  - hourly roll-up of transactions by credit card
+- dailyaggregates_bycc   - daily roll-up of transactions by credit card
+- monthlyaggregates_bycc - monthly roll-up of transactions by credit card
+- yearlyaggregates_bycc  - yearly roll-up of transactions by credit card
+- dailytxns_bymerchant   - daily roll-up of transactions by merchant
+- txn_count_min          - track transactions in a rolling window for analytics
 
 The create script also creates some sample data for example:
 
