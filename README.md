@@ -25,12 +25,11 @@ The ‘Fifth Report on Card Fraud’ from the European Central Bank (ECB) stated
 
 In order to combat this a payment provider wants to monitor credit card transactions to detect and deter fraud attempts with the ability to search and group transactions by credit card, period, merchant, credit card provider, amounts, status etc.
 
+- The solution must be able to identify all transactions tagged as fraudulent both in real-time and historically.
 
-The solution must be able to identify all transactions tagged as fraudulent both in real-time and historically.
+- It must also provide flexible query capabilities allowing reporting of all transactions for specific cards and merchants.
 
-It must also provide flexible query capabilities allowing reporting of all transactions for specific cards and merchants.
-
-It must display the moving ratio of successful versus fraudulent transactions
+- It must display the moving ratio of successful versus fraudulent transactions
 
 
 ## Performance Guarantee
@@ -58,7 +57,7 @@ When the Node.js ReST service has been created:
 
 
 
-## Clone the NCFP repository
+## Step 1: Clone the NCFP repository
 
 The first step is to clone this repo to a directory on the machine where you have previously installed NuoDB as described above:
 ```
@@ -66,7 +65,7 @@ $ git clone https://github.com/simonambridge/NCFP
 ```
 
 
-## Data Model
+## Step 2: Data Model
 
 To create this schema and the tables described below, run the create schema script:
 ```
@@ -166,7 +165,7 @@ You can use SQL to explore the list of provided ReST queries here: https://githu
 
 
 
-## Analyzing data using NuoDB Spark Analytics
+## Step 3: Analyzing data using NuoDB Spark Analytics
 
 NuoDB provides integration with Spark via the NuoDB JDBC driver to enable analysis of data in-place on the same cluster where the data is ingested and stored. Workloads can be isolated and there is no need to ETL the data.
 
@@ -201,7 +200,7 @@ When the above steps have been completed the system should be setup and function
 Now you'll want to know what the capabilities of this platform are so that you can begin to understand what kind of hardware you might need to build a real system. We can use the NuoDB SimpleDriver stress tool  to help us measure system performance.
 
 
-## Querying Data Using A ReST API with Node.js and D3
+## Step 4: Querying Data Using A ReST API with Node.js and D3
 
 The sample SQL queries are served by a web service written in Node.js. The code for this web service is provided in the repo.
 
@@ -212,7 +211,7 @@ Use a web browser to run the queries. Use the example url’s supplied - these w
 The instructions for setting up the ReST Server are described here: http://github.com/simonambridge/NCFP/tree/master/ReST.md
 
 
-## SimpleDriver 
+## Step 5: SimpleDriver 
 
 Running a NuoDB performance test tool helps show how NuoDB will perform in terms of latency and throughput for writes and reads to/from the system.
 
