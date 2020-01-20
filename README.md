@@ -294,7 +294,7 @@ SQL> select count (*) from transactions ;
   $ cd /<NCFP install path>/NCFP/TransactionHandlers
   ```
   
-   The spark-submit command is used to submit a spark job - use the consumer.sh script to containing the following:
+   The spark-submit command is used to submit a spark job - use the consumer.sh script, containing the following:
   ```
 IVY_PATH=$HOME/.ivy2 export IVY_PATH
 spark-submit --jars $IVY_PATH/cache/com.typesafe/config/bundles/config-1.3.2.jar \
