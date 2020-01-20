@@ -32,7 +32,7 @@ This demo uses an installation running on AWS
 
 The first step is to clone this repo to a directory on the machine where you have previously installed NuoDB in Step 1:
 ```
-$ git clone https://github.com/simonambridge/NCFP
+$ git clone https://github.com/simonambridge/NuoDB-Kafka-SparkStreaming
 ```
 
 
