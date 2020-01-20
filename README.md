@@ -151,7 +151,7 @@ At this point you should have NuoDB, Kafka,  Spark and SBT installed. configured
 1. Navigate to the project TransactionHandlers directory:
 
     ```
-    $ cd <path>/NuoDB-Card-Fraud-Prevention/TransactionHandlers
+    $ cd <path>/NuoDB-Kafka-SparkStreaming/TransactionHandlers
     ```
     
     Update sbt (may take a little while):
@@ -167,9 +167,9 @@ At this point you should have NuoDB, Kafka,  Spark and SBT installed. configured
 
  ```
 $ sbt clean
-[info] Loading project definition from /home/ec2-user/NuoDB-Card-Fraud-Prevention/TransactionHandlers/project
+[info] Loading project definition from /home/ec2-user/NuoDB-Kafka-SparkStreaming/TransactionHandlers/project
 [info] Loading settings from build.sbt ...
-[info] Set current project to transactionhandlers (in build file:/home/ec2-user/NuoDB-Card-Fraud-Prevention/TransactionHandlers/)
+[info] Set current project to transactionhandlers (in build file:/home/ec2-user/NuoDB-Kafka-SparkStreaming/TransactionHandlers/)
 [success] Total time: 0 s, completed 20-Jan-2020 21:26:06
  ```
 
