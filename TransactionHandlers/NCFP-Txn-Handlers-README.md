@@ -18,8 +18,6 @@ The Transaction consumer, also written in Scala, is a Spark streaming job. This 
 
 - The second part of the Spark consumer job counts the number of records processed each minute, and stores that data to an aggregates table. The only unique aspect of this flow is that the job also reads back from from this table and builds a rolling count of the data. 
 
-The aggregated results can be displayed using the Node.js web service provided, for example:
-
 <p align="left">
   <img src="txnchart.png"/>
 </p>
@@ -134,6 +132,7 @@ When you first compile with sbt it may take some time to download the libraries 
 
   The next step is to start the producer and consumer to start generating and receiving transactions.
 
+
 ### Start the Transaction Producer app
 
 From the root directory of the project (`<NCFP install path>/NCFP/TransactionHandlers`) start the producer app:
@@ -242,14 +241,32 @@ SQL> select count (*) from rtfap.transactions ;
 
   Leave this job running to continue to process transactions.
 
-  2. At this point you can use cqlsh to check the number of rows in the Transactions table - you should see that there are records appearing as they are posted by the consumer process:
+  2. At this point you can use NuoSQL to check the number of rows in the Transactions table - you should see that there are records appearing as they are posted by the consumer process:
 
   ```
-  cqlsh> select count(*) from rtfap.transactions;
+  SQL> select count(*) from transactions;
 
-   count
-  -------
-    13657
+ COUNT
+ ------
+
+  1962
+  
+  SQL> select * from transactions limit 10;
+
+                TXN_ID                     CC_NO       YEAR  MONTH  DAY         TXN_TIME         AMOUNT  CC_PROVIDER  COUNTRY  DATE_TEXT  HOUR    LOCATION       MERCHANT     MIN            NOTES             STATUS     TAG        USER_ID
+ ------------------------------------ ---------------- ----- ------ ---- ----------------------- ------- ------------ -------- ---------- ----- ------------- --------------- ---- -------------------------- -------- ---------- -------------
+
+ 62d1be5d-15f3-4d04-88ad-a937a3b49e95 1234123412341234 2020    1     2   2020-01-02 11:04:19     200      VISA         <null>   <null>     11   London        Ted Baker         4  pretty good clothing       Approved Suspicious tomdavis
+ 63d1be5d-15f3-4d04-88ad-a937a3b49e95 1234123412341235 2020    1     2   2020-01-02 11:04:24     400      VISA         <null>   <null>     11   Manchester    Macy              4  cool stuff-good customer   Approved HighValue  simonanbridge
+ 64d1be5d-15f3-4d04-88ad-a937a3b49e95 1234123412341235 2020    1     2   2020-01-02 11:04:53     800      VISA         <null>   <null>     11   London        Harrods           4  customer likes electronics Approved HighValue  simonanbridge
+ 65d1be5d-15f3-4d04-88ad-a937a3b49e95 1234123412341236 2020    1     3   2020-01-03 11:04:59     750      MASTERCARD   <null>   <null>     11   San Jose      GAP               4  customer likes electronics Approved HighValue  mikestewart
+ 66d1be5d-15f3-4d04-88ad-a937a3b49e95 1234123412341237 2020    1     3   2020-01-03 12:30:00     1500     AMEX         <null>   <null>     12   New York      Ann Taylor       30  frequent customer          Approved HighValue  caroline
+ 67d1be5d-15f3-4d04-88ad-a937a3b49e95 1234123412341234 2020    1     3   2020-01-04 21:04:19     200      VISA         <null>   <null>     21   San Francisco Nordstrom         4  asked for discounts        Approved Fraudulent tomdavis
+ 047b4338-f298-4641-b616-a091086ef758 4130000045996385 2020    0     7   2020-01-07 19:49:14.168 2686.52  4130         CN       20200007    7                 H-E-B Grocery    49  <null>                     APPROVED <null>     <null>
+ 4c4e3859-c92e-4f0e-8759-617b1d081179 1474000013828218 2020    0     7   2020-01-07 19:49:14.169 786.38   1474         IN       20200007    7                 Starbucks        49  <null>                     APPROVED <null>     <null>
+ 73ba658b-b810-4dd1-8976-0b1064212c06 5552000004197795 2020    0     7   2020-01-07 19:49:14.169 1426.29  5552         GH       20200007    7                 CVS Caremark     49  <null>                     APPROVED <null>     <null>
+ fcaf0c8a-6082-43b4-bc46-eca8378409fc 5391000063419149 2020    0     7   2020-01-07 19:49:14.17  1862.27  5391         CN       20200007    7                 Wal-Mart Stores  49  <null>                     APPROVED <null>     <null>
+
   ```
 
   3. Every 60 seconds you will also see the consumer process generate output similar to the following:
@@ -267,58 +284,16 @@ SQL> select count (*) from rtfap.transactions ;
   These records are stored in the ```txn_count_min``` table, for example:
   
   ```
-  cqlsh:rtfap> SELECT * FROM rtfap.txn_count_min WHERE solr_query = '{"q":"*:*",  "fq":"time:[NOW-1HOUR TO *]","sort":"time asc"}';
+ SQL> SELECT * FROM txn_count_min;
 
-   year | month | day | hour | minute | approved_rate_hr | approved_rate_min | approved_txn_hr | approved_txn_min | solr_query | time                     | ttl_txn_hr | ttl_txn_min
-  +-----+-------+-----+------+--------+------------------+-------------------+-----------------+------------------+------------+--------------------------+------------+-------------+
-  2016 |    12 |   2 |   23 |     43 |          95.7958 |           95.7958 |             319 |              319 |       null | 2016-12-02 23:43:44+0000 |        333 |         333
-  2016 |    12 |   2 |   23 |     44 |         94.86405 |          93.92097 |             628 |              309 |       null | 2016-12-02 23:44:44+0000 |        662 |         329
-  2016 |    12 |   2 |   23 |     45 |         94.90695 |          94.98607 |             969 |              341 |       null | 2016-12-02 23:45:44+0000 |       1021 |         359
-  2016 |    12 |   2 |   23 |     46 |         94.76015 |          94.31138 |            1284 |              315 |       null | 2016-12-02 23:46:44+0000 |       1355 |         334
-  2016 |    12 |   2 |   23 |     47 |         94.72769 |          94.60916 |            1635 |              351 |       null | 2016-12-02 23:47:44+0000 |       1726 |         371
-  2016 |    12 |   2 |   23 |     48 |         94.77218 |          94.98607 |            1976 |              341 |       null | 2016-12-02 23:48:44+0000 |       2085 |         359
-  2016 |    12 |   2 |   23 |     49 |         94.65021 |          93.91304 |            2300 |              324 |       null | 2016-12-02 23:49:44+0000 |       2430 |         345
-  2016 |    12 |   2 |   23 |     50 |         94.53041 |          93.69628 |            2627 |              327 |       null | 2016-12-02 23:50:44+0000 |       2779 |         349
-  2016 |    12 |   2 |   23 |     51 |         94.56522 |          94.84241 |            2958 |              331 |       null | 2016-12-02 23:51:44+0000 |       3128 |         349
-  2016 |    12 |   2 |   23 |     52 |         94.61231 |                95 |            3319 |              361 |       null | 2016-12-02 23:52:44+0000 |       3508 |         380
-  2016 |    12 |   2 |   23 |     53 |          94.5497 |          93.91304 |            3643 |              324 |       null | 2016-12-02 23:53:44+0000 |       3853 |         345
-  2016 |    12 |   2 |   23 |     54 |         94.64328 |          95.62842 |            3993 |              350 |       null | 2016-12-02 23:54:44+0000 |       4219 |         366
-  2016 |    12 |   2 |   23 |     55 |         94.65381 |          94.78261 |            4320 |              327 |       null | 2016-12-02 23:55:44+0000 |       4564 |         345
-  2016 |    12 |   2 |   23 |     56 |         94.63454 |              94.4 |            4674 |              354 |       null | 2016-12-02 23:56:44+0000 |       4939 |         375
-  2016 |    12 |   2 |   23 |     57 |         94.67097 |          95.20958 |            4992 |              318 |       null | 2016-12-02 23:57:44+0000 |       5273 |         334
-  2016 |    12 |   2 |   23 |     58 |         94.60566 |          93.60465 |            5314 |              322 |       null | 2016-12-02 23:58:44+0000 |       5617 |         344
-  2016 |    12 |   2 |   23 |     59 |         94.63087 |          95.04373 |            5640 |              326 |       null | 2016-12-02 23:59:44+0000 |       5960 |         343
-  2016 |    12 |   3 |    0 |      0 |         96.73913 |          96.73913 |             356 |              356 |       null | 2016-12-03 00:00:44+0000 |        368 |         368
-  2016 |    12 |   3 |    0 |      1 |         96.32249 |          95.87021 |             681 |              325 |       null | 2016-12-03 00:01:44+0000 |        707 |         339
-  2016 |    12 |   3 |    0 |      2 |         96.13936 |          95.77465 |            1021 |              340 |       null | 2016-12-03 00:02:44+0000 |       1062 |         355
-  2016 |    12 |   3 |    0 |      3 |         96.11033 |          96.02273 |            1359 |              338 |       null | 2016-12-03 00:03:44+0000 |       1414 |         352
+ YEAR  MONTH  DAY  HOUR  MINUTE         TIME         APPROVED_RATE_HR  APPROVED_RATE_MIN  APPROVED_TXN_HR  APPROVED_TXN_MIN  TTL_TXN_HR  TTL_TXN_MIN
+ ----- ------ ---- ----- ------- ------------------- ----------------- ------------------ ---------------- ----------------- ----------- ------------
+
+ 2020    1     7    19     50    2020-01-07 19:50:14 94.87179487179486 94.87179487179486         333              333            351         351
+ 2020    1     7    19     51    2020-01-07 19:51:14 95.70200573065902 96.54178674351584         668              335            698         347
+ 2020    1     7    19     52    2020-01-07 19:52:14 95.635305528613   95.4954954954955          986              318           1031         333
+ 2020    1     7    19     53    2020-01-07 19:53:14 94.92857142857143 92.95392953929539        1329              343           1400         369
+ 2020    1     7    20     35    2020-01-07 20:35:51 96                96                         96               96            100         10000:03:44+0000 |       1414 |         352
   ```
 
 
-  Data in the ```txn_count_min``` table will be used to service a D3 chart.
-  
-  > Remember - there is a TTL on the transactions table, so the data will gradually age out after 24 hours!! :)
-  
-  > Note - if you get an error like this on a single-node install it may because you've exceeded the numbner of tombstones:
-  ```
-  ReadFailure: Error from server: code=1300 [Replica(s) failed to execute read] message="Operation failed - received 0 responses and 1 failures" info={'failures': 1, 'received_responses': 0, 'error_code_map': {'127.0.0.1': '0x0001'}, 'required_responses': 1, 'consistency': 'ONE'}
-  ```
-  In this case run the following command in cqlsh:
-  ```
-  cqlsh:rtfap> ALTER TABLE transactions WITH GC_GRACE_SECONDS = 0;
-  ```
-  After this trigger a compaction via the nodetool to flush out all the tombstones.
-  On a one-node-cluster you can leave  GC_GRACE_SECONDS at zero but keep in mind change this back if you plan to use more than one node.
-
-
-  4. View the transaction approval data as a graph
-  
-  Go to the service URL: http://localhost:3000/
-  
-  Select the Transaction Chart option. After a while you should see something similar to the following:
-  
-  <p align="left">
-    <img src="txnchart2.png"/>
-  </p>
-
-You could add more detail to this chart if you wish.
