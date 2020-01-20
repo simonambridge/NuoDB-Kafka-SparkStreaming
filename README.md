@@ -26,16 +26,6 @@ This demo will use these technologies:
 
 This demo uses an installation running on AWS
 
-### URLs
-After Spark has been installed the Spark UI URL will be:
-- Spark Master: http://[NuoDB_NODE_IP]:7080/ e.g. ```http://hostname:7080/```
-
-When the Node.js ReST service has been created:
-- Node.js ReST: http://[NuoDB_NODE_IP]:3000 e.g. ```http://hostname:3000``` 
-
-(where [NuoDB_NODE_IP] is the public IP address of your single node test NuoDB installation)
-
-
 
 ## Step 2: Clone the NCFP repository
 
@@ -45,7 +35,7 @@ $ git clone https://github.com/simonambridge/NCFP
 ```
 
 
-## Step 3: Data Model
+## Step 3: Create The Data Model
 
 To create this schema and the tables described below, run the create schema script:
 ```
@@ -160,5 +150,4 @@ Follow the Spark streaming installation and set up instructions here: https://gi
 
 
 
-<sub>Acknowldegements: Based on the original project created with help from colleagues at DataStax.
-<BR>NCFP now has a Node.js/D3 ReST interface replacing Java, enhanced producer/consumer codebase, new roll-up reports, real time charts, a new demo ReST UI, improved documentation, etc</sub>
+<sub>Acknowldegements: Based on the original project, created with help from Cary Bourgeouis.
