@@ -81,6 +81,10 @@ Applications: 0 Running, 0 Completed
 Drivers: 0 Running, 0 Completed
 Status: ALIVE
 
+## At this stage you can return to the "Transaction Handlers" Readme and continue with "Step 4. Install SBT (Scala Build Tool)"
+
+However, if you wish to have a play with Spark interactively, follow the steps below.
+
 
 ### Start The Spark 2.4 Shell
 ```
@@ -273,7 +277,7 @@ Output
 ```
 
 
-## Install The Hadoop Native libraries
+## Install The Hadoop Native Libraries
 
 Follow these steps to avoid "WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable" warning
 
