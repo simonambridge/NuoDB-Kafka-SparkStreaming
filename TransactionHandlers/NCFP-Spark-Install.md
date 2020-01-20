@@ -71,7 +71,7 @@ starting org.apache.spark.deploy.master.Master, logging to /opt/spark-2.4.4-bin-
 http://localhost:8080/
 or 
 http://35.177.227.213:8080/
-
+```
 Spark Master at spark://ip-172-31-0-207.eu-west-2.compute.internal:7077
 URL: spark://ip-172-31-0-207.eu-west-2.compute.internal:7077
 Alive Workers: 0
@@ -80,6 +80,7 @@ Memory in use: 0.0 B Total, 0.0 B Used
 Applications: 0 Running, 0 Completed
 Drivers: 0 Running, 0 Completed
 Status: ALIVE
+```
 
 ## At this stage you can return to the "Transaction Handlers" Readme and continue with "Step 4. Install SBT (Scala Build Tool)"
 
