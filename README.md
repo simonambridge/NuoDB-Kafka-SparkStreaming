@@ -1,39 +1,19 @@
-# NuoDB Real-time Card Fraud Analysis Platform
+# NuoDB Streaming Data Pipeline Example
 
-How to use modern, real-time, distributed SQL and streaming technologies to build a working model of a scalable fraud-detection platform. 
+How to use modern, real-time, distributed SQL and streaming technologies to build the foudnation for a scalable data pipeline. 
 This demo will use these technologies:
 
 - NuoDB
 - Spark
 - Scala
 - Akka
-- Zeppelin
+
 
 <p>
 <p align="center">
   <img src="NCFP-architecture.png"/>
 </p>
 
-
-## Background 
-
-Payment card fraud is a growing and global problem. Payment card losses across the globe in 2018 amounted to almost $25 billion. The United States was by far the leading payment fraud prone country accounting for 38.6% of total reported card losses (https://shiftprocessing.com/credit-card-fraud-statistics/).
-
-The ‘Fifth Report on Card Fraud’ from the European Central Bank (ECB) stated that the total level of European card fraud losses in 2018 amounted to $1.8 billion, with the UK accounting for half of those losses. The vast majority of the UK’s losses came from card-not-present (CNP) transactions.
-
-## Use Case 
-
-In order to combat this a payment provider wants to monitor credit card transactions to detect and deter fraud attempts with the ability to search and group transactions by credit card, period, merchant, credit card provider, amounts, status etc.
-
-- The solution must be able to identify all transactions tagged as fraudulent both in real-time and historically.
-
-- It must also provide flexible query capabilities allowing reporting of all transactions for specific cards and merchants.
-
-- It must display the moving ratio of successful versus fraudulent transactions
-
-
-## Performance Guarantee
-- The solution must demonstrate that the system can support 1,000 transactions a second with stable latencies.
 
 ## Step 1: Install Pre-Requisites
   - A NuoDB 4.x database to run your queries against.
@@ -178,44 +158,6 @@ Streaming analytics code can be found under the directory `TransactionHandlers/p
 
 Follow the Spark streaming installation and set up instructions here: https://github.com/simonambridge/NCFP/blob/master/TransactionHandlers/NCFP-Txn-Handlers-README.md
 
-
-### Batch Analytics
-
-Two Spark batch jobs have been included. 
-* `run_rollupbymerchant.sh` provides a daily roll-up of all the transactions in the last day, by merchant. 
-* `run_rollupbycc.sh` populates the hourly/daily/monthly/yearly aggregate tables by credit card, calculating the total_amount, avg_amount and total_count.
-
-The roll up batch analytics code and submit scripts can be found under the directory `RollUpReports` (pre-requisite: run the streaming analytics first in order to populate the Transaction table with transactions).
-
-Follow the Spark batch job installation and set up instructions here:https://github.com/simonambridge/NCFP/tree/master/RollUpReports/README.md
-
-When the above steps have been completed the system should be setup and functioning. 
-
-Now you'll want to know what the capabilities of this platform are so that you can begin to understand what kind of hardware you might need to build a real system. We can use the NuoDB SimpleDriver stress tool  to help us measure system performance.
-
-
-## Step 5: Querying Data Using A ReST API with Node.js and D3
-
-The sample SQL queries are served by a web service written in Node.js. The code for this web service is provided in the repo.
-
-A ReSTful web interface provides an API to allow the calling programs to query the data in NuoDB.
-
-Use a web browser to run the queries. Use the example url’s supplied - these will return a json representation of the data using the ReST service. Alternatively paste the queries into nuosql and run them from the SQL command line.
-
-The instructions for setting up the ReST Server are described here: http://github.com/simonambridge/NCFP/tree/master/ReST.md
-
-
-## Step 6: SimpleDriver 
-
-Running a NuoDB performance test tool helps show how NuoDB will perform in terms of latency and throughput for writes and reads to/from the system.
-
-The stress tool will inject synthetic data, so we will use a different table specifically for the stress testing.
-
-The schema crteation script ```creates_and_inserts.SQL``` also creates the dummy table ```txn_by_cc``` that will be used by SimpleDriver for the performance testing.
-
-SimpleDriver can generate synthetic 'real' data, for example: month is a value between 1 and 12, year is between 2010 and 2020, credit card number is 16 characters in length, etc. The text fields are filled with random text.
-
-SimpleDriver can be run repeatedly varying number of threads, batch counts etc. This allows you to determine the optimum number of threads required to optimally run the task.
 
 
 <sub>Acknowldegements: Based on the original project created with help from colleagues at DataStax.
