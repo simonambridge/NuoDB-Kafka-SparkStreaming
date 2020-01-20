@@ -140,7 +140,7 @@ Follow the Kafka, Spark streaming and SBT installation and set up instructions h
 
 ### Build the packages
 
-At this point you should have NuoDB, Kafka,  SPark and SBT installed. configured and running.
+At this point you should have NuoDB, Kafka,  Spark and SBT installed. configured and running.
 
 * You should have already created the NuoDB tables using the creates_and_inserts.cql script
 * All components should be working e.g. Zookeeper, Kafka
@@ -159,20 +159,18 @@ At this point you should have NuoDB, Kafka,  SPark and SBT installed. configured
     $ sbt update
     [info] Done updating.
     [success] Total time: 8 s, completed 20-Dec-2019 01:19:04
-
     ```
     
     
     Clean up the build environment:
 
-    ```
-    $ sbt clean
+ ```
+$ sbt clean
 [info] Loading project definition from /home/ec2-user/NuoDB-Card-Fraud-Prevention/TransactionHandlers/project
 [info] Loading settings from build.sbt ...
 [info] Set current project to transactionhandlers (in build file:/home/ec2-user/NuoDB-Card-Fraud-Prevention/TransactionHandlers/)
 [success] Total time: 0 s, completed 20-Jan-2020 21:26:06
-    ```
-
+ ```
 
 2. Build the Producer app with this command:
   
