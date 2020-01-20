@@ -5,6 +5,7 @@ This demo will use these technologies:
 
 - NuoDB
 - Spark
+- Kafka
 - Scala
 - Akka
 
