@@ -149,25 +149,36 @@ $ sbt producer/run
 
 After some initial output you will see card transactions being created and posted to Kafka:
 ```
-[info] Set current project to transactionhandlers (in build file:/u02/dev/dse_dev/RTFAP/RTFAP2/TransactionHandlers/)
-[info] Running TransactionProducer 
 kafkaHost 127.0.0.1:9092
 kafkaTopic NewTransactions
 maxNumTransPerWait 5
 waitMillis 500
 runDurationSeconds -1
-[DEBUG] [11/09/2017 22:31:09.061] [run-main-0] [EventStream(akka://TransactionProducer)] logger log1-Logging$DefaultLogger started
-[DEBUG] [11/09/2017 22:31:09.063] [run-main-0] [EventStream(akka://TransactionProducer)] Default Loggers started
-...
-(cc_no=,2251000088321444, txn_time=,2017-11-09 22:31:09.735, items=,Item_28750->128.66, amount=,128.66)
-(cc_no=,9065000095025035, txn_time=,2017-11-09 22:31:09.735, items=,Item_94332->246.57,Item_16778->708.27,Item_89204->541.07, amount=,1495.91)
-(cc_no=,2195000009045559, txn_time=,2017-11-09 22:31:09.735, items=,Item_92502->194.22, amount=,194.22)
-196 Transactions created.
-(cc_no=,3531000024839480, txn_time=,2017-11-09 22:31:10.237, items=,Item_88890->564.97,Item_99369->404.01,Item_38980->827.30, amount=,1796.28)
-(cc_no=,7017000098496305, txn_time=,2017-11-09 22:31:10.238, items=,Item_45228->447.20, amount=,447.20)
-(cc_no=,8139000079813195, txn_time=,2017-11-09 22:31:10.238, items=,Item_56710->746.63,Item_76484->793.98, amount=,1540.61)
-201 Transactions created.
-...
+[DEBUG] [01/20/2020 21:15:31.737] [run-main-0] [EventStream(akka://TransactionProducer)] logger log1-Logging$DefaultLogger started
+[DEBUG] [01/20/2020 21:15:31.738] [run-main-0] [EventStream(akka://TransactionProducer)] Default Loggers started
+2 Transactions created.
+(cc_no=,1004000087276326, txn_time=,2020-01-20 21:15:31.894, items=,Item_84504->627.04,Item_52160->289.01, amount=,916.05)
+(cc_no=,6997000002220440, txn_time=,2020-01-20 21:15:31.921, items=,Item_33526->307.41,Item_92629->654.06, amount=,961.46)
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+3 Transactions created.
+(cc_no=,7892000058641377, txn_time=,2020-01-20 21:15:32.672, items=,Item_99662->331.93,Item_25323->503.12, amount=,835.04)
+4 Transactions created.
+(cc_no=,0983000074313343, txn_time=,2020-01-20 21:15:32.866, items=,Item_56422->409.64,Item_83718->270.11, amount=,679.75)
+9 Transactions created.
+(cc_no=,3580000028152903, txn_time=,2020-01-20 21:15:33.366, items=,Item_11331->525.67,Item_69284->461.34, amount=,987.01)
+(cc_no=,0317000033050234, txn_time=,2020-01-20 21:15:33.368, items=,Item_33928->980.74,Item_84843->622.12,Item_35138->147.29,Item_8403->868.42, amount=,2618.57)
+(cc_no=,6759000070941524, txn_time=,2020-01-20 21:15:33.369, items=,Item_22633->707.37,Item_36292->172.56,Item_93730->620.76,Item_68802->363.97, amount=,1864.67)
+(cc_no=,1544000004428021, txn_time=,2020-01-20 21:15:33.37, items=,Item_67668->236.24,Item_93556->325.77,Item_94628->547.71, amount=,1109.72)
+(cc_no=,9768000066399852, txn_time=,2020-01-20 21:15:33.372, items=,Item_63199->855.43, amount=,855.43)
+14 Transactions created.
+(cc_no=,8301000091470542, txn_time=,2020-01-20 21:15:33.867, items=,Item_86836->392.50, amount=,392.50)
+(cc_no=,6109000041496035, txn_time=,2020-01-20 21:15:33.867, items=,Item_51891->635.31,Item_74233->607.48,Item_20548->36.43, amount=,1279.22)
+(cc_no=,3634000010746158, txn_time=,2020-01-20 21:15:33.868, items=,Item_63266->720.26,Item_82703->910.15,Item_83318->209.00,Item_79596->241.54, amount=,2080.95)
+(cc_no=,8554000034050944, txn_time=,2020-01-20 21:15:33.87, items=,Item_85404->169.94,Item_84596->368.18,Item_9159->699.59, amount=,1237.71)
+(cc_no=,8039000079660074, txn_time=,2020-01-20 21:15:33.872, items=,Item_34616->83.95,Item_76718->478.09,Item_31061->763.11,Item_92097->194.94, amount=,1520.09)
+15 Transactions created.
 ```
 
 Leave this job running to continue to generate transactions.
@@ -175,22 +186,29 @@ Leave this job running to continue to generate transactions.
 The records for each transaction are consumed and stored in a NuoDB table.
 You can view the records that are being created. Start NuoSQL and run the following query:
 ```
+$ nuosql hockey --user dba --password dba
+
 SQL> select * from transactions;
 
-cc_no            | year | month | day | txn_time                        | amount  | cc_provider | country | date_text | hour | items | location | merchant                  | min | notes | solr_query | status   | tags | txn_id                               | user_id
-------------------+------+-------+-----+---------------------------------+---------+-------------+---------+-----------+------+-------+----------+---------------------------+-----+-------+------------+----------+------+--------------------------------------+---------
- 1640000007096559 | 2017 |    11 |   5 | 2017-12-05 21:19:24.096000+0000 | 1044.02 |        1640 |      CN |  20171105 |    9 |  null |          |           AVB Brandsource |  19 |  null |       null | APPROVED | null | e96da250-0c58-4d9e-9765-b331c6d6fcc2 |    null
- 1847000039868834 | 2017 |    11 |   5 | 2017-12-05 21:20:20.365000+0000 | 1535.59 |        1847 |      NG |  20171105 |    9 |  null |          |           Wal-Mart Stores |  20 |  null |       null | REJECTED | null | cd9c157c-56ff-4799-9511-37a680f7e817 |    null
-```
-The number of records will constantly increase - re-run this command in cqlsh a few times:
-```
-SQL> select count (*) from rtfap.transactions ;
+                TXN_ID                     CC_NO       YEAR  MONTH  DAY         TXN_TIME         AMOUNT  CC_PROVIDER  COUNTRY  DATE_TEXT  HOUR    LOCATION       MERCHANT     MIN            NOTES             STATUS     TAG        USER_ID
+ ------------------------------------ ---------------- ----- ------ ---- ----------------------- ------- ------------ -------- ---------- ----- ------------- --------------- ---- -------------------------- -------- ---------- -------------
 
- count
+ 62d1be5d-15f3-4d04-88ad-a937a3b49e95 1234123412341234 2020    1     2   2020-01-02 11:04:19     200      VISA         <null>   <null>     11   London        Ted Baker         4  pretty good clothing       Approved Suspicious tomdavis
+ 63d1be5d-15f3-4d04-88ad-a937a3b49e95 1234123412341235 2020    1     2   2020-01-02 11:04:24     400      VISA         <null>   <null>     11   Manchester    Macy              4  cool stuff-good customer   Approved HighValue  simonanbridge
+ 64d1be5d-15f3-4d04-88ad-a937a3b49e95 1234123412341235 2020    1     2   2020-01-02 11:04:53     800      VISA         <null>   <null>     11   London        Harrods           4  customer likes electronics Approved HighValue  simonanbridge
+ 65d1be5d-15f3-4d04-88ad-a937a3b49e95 1234123412341236 2020    1     3   2020-01-03 11:04:59     750      MASTERCARD   <null>   <null>     11   San Jose      GAP               4  customer likes electronics Approved HighValue  mikestewart
+ 66d1be5d-15f3-4d04-88ad-a937a3b49e95 1234123412341237 2020    1     3   2020-01-03 12:30:00     1500     AMEX         <null>   <null>     12   New York      Ann Taylor       30  frequent customer          Approved HighValue  caroline
+ 67d1be5d-15f3-4d04-88ad-a937a3b49e95 1234123412341234 2020    1     3   2020-01-04 21:04:19     200      VISA         <null>   <null>     21   San Francisco Nordstrom         4  asked for discounts        Approved Fraudulent tomdavis
+ 047b4338-f298-4641-b616-a091086ef758 4130000045996385 2020    0     7   2020-01-07 19:49:14.168 2686.52  4130         CN       20200007    7                 H-E-B Grocery    49  <null>                     APPROVED <null>     <null>
+ ```
+
+The number of records will constantly increase - re-run this command in NuoSQL a few times:
+```
+SQL> select count (*) from transactions ;
+
+ COUNT
 -------
   3832
-
-(1 rows)
 ```
 
 
@@ -200,12 +218,10 @@ SQL> select count (*) from rtfap.transactions ;
   
   Navigate to the TransactionHandlers directory
   ```
-  $ cd /<RTFAP2 install path>/RTFAP2/TransactionHandlers
+  $ cd /<NCFP install path>/NCFP/TransactionHandlers
   ```
   
-  > You no longer need to specify a spark master address in the dse spark-submit command:
-  
-  Use the dse command to submit a spark job:
+   Use the spark-submit command to submit a spark job:
   ```
   $ spark-submit --jars /Users/simonambridge/.ivy2/cache/com.typesafe/config/bundles/config-1.3.2.jar --packages org.apache.spark:spark-streaming-kafka_2.11:1.6.3 --class TransactionConsumer consumer/target/scala-2.11/consumer_2.11-0.1.jar
   ```
@@ -213,45 +229,51 @@ SQL> select count (*) from rtfap.transactions ;
   After some initial output you will see records being consumed from Kafka by Spark:
   
   ```
-  Ivy Default Cache set to: /home/dse/.ivy2/cache
-  The jars for the packages stored in: /home/dse/.ivy2/jars
-  :: loading settings :: url = jar:file:/usr/share/dse/spark/lib/ivy-2.4.0.jar!/org/apache/ivy/core/settings/ivysettings.xml
-  org.apache.spark#spark-streaming-kafka_2.10 added as a dependency
-  :: resolving dependencies :: org.apache.spark#spark-submit-parent;1.0
-  ...
-  6 rows processed...
-  +----------------+-----------+----+-----+---+----+---+--------------------+--------------------+----------------+--------+-------+-------+--------+---------+
-  |           cc_no|cc_provider|year|month|day|hour|min|            txn_time|              txn_id|        merchant|location|country| amount|  status|date_text|
-  +----------------+-----------+----+-----+---+----+---+--------------------+--------------------+----------------+--------+-------+-------+--------+---------+
-  |1567000016674783|       1567|2016|   11|  3|   0| 37|2016-12-03 00:37:...|e4425655-348c-47d...|Lowe's Companies|        |     KH|1153.26|APPROVED| 20161103|
-  |8797000077172306|       8797|2016|   11|  3|   0| 37|2016-12-03 00:37:...|abeae2c2-173c-429...|       SUPERVALU|        |     DE| 812.28|APPROVED| 20161103|
-  |5034000081986740|       5034|2016|   11|  3|   0| 37|2016-12-03 00:37:...|afa129ee-6829-4b0...|  Dollar General|        |     IN|1324.22|REJECTED| 20161103|
-  |5859000021039989|       5859|2016|   11|  3|   0| 37|2016-12-03 00:37:...|ef372bb1-dedf-421...|          Costco|        |     ID| 757.88|APPROVED| 20161103|
-  +----------------+-----------+----+-----+---+----+---+--------------------+--------------------+----------------+--------+-------+-------+--------+---------+
+Ivy Default Cache set to: /home/ec2-user/.ivy2/cache
+The jars for the packages stored in: /home/ec2-user/.ivy2/jars
+:: loading settings :: url = jar:file:/opt/spark-2.4.4-bin-hadoop2.7/jars/ivy-2.4.0.jar!/org/apache/ivy/core/settings/ivysettings.xml
+org.apache.spark#spark-streaming-kafka_2.11 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-9709a523-797a-498a-8e00-e24541898793;1.0
+...
+11 rows processed...
+20/01/10 11:39:17 WARN JdbcUtils: Requested isolation level 1 is not supported; falling back to default isolation level 8
++----------------+-----------+----+-----+---+----+---+--------------------+--------------------+--------------------+--------+-------+-------+--------+---------+
+|           cc_no|cc_provider|year|month|day|hour|min|            txn_time|              txn_id|            merchant|location|country| amount|  status|date_text|
++----------------+-----------+----+-----+---+----+---+--------------------+--------------------+--------------------+--------+-------+-------+--------+---------+
+|9556000017215010|       9556|2020|    0| 10|  11| 39|2020-01-10 11:39:...|efaf0b45-ffc1-455...|Royal Ahold / Aho...|        |     MW|1181.05|APPROVED| 20200010|
+|5602000016586055|       5602|2020|    0| 10|  11| 39|2020-01-10 11:39:...|1109c36b-0fd7-430...|Apple Store / iTunes|        |     IN| 518.22|APPROVED| 20200010|
+|2942000069912401|       2942|2020|    0| 10|  11| 39|2020-01-10 11:39:...|a9965b1d-b645-4e4...|              Hy-Vee|        |     IN| 137.27|APPROVED| 20200010|
++----------------+-----------+----+-----+---+----+---+--------------------+--------------------+--------------------+--------+-------+-------+--------+---------+
+3 rows processed...
 
-  4 rows processed...
-  +----------------+-----------+----+-----+---+----+---+--------------------+--------------------+---------------+--------+-------+-------+--------+---------+
-  |           cc_no|cc_provider|year|month|day|hour|min|            txn_time|              txn_id|       merchant|location|country| amount|  status|date_text|
- +----------------+-----------+----+-----+---+----+---+--------------------+--------------------+---------------+--------+-------+-------+--------+---------+
-  |5907000019173296|       5907|2016|   11|  3|   0| 37|2016-12-03 00:37:...|93c3741b-5132-49e...|     DineEquity|        |     EG| 896.46|APPROVED| 20161103|
-  |7624000055927622|       7624|2016|   11|  3|   0| 37|2016-12-03 00:37:...|e7a09e38-543b-4bf...|     Albertsons|        |     FR|1944.73|APPROVED| 20161103|
-  |5539000022858144|       5539|2016|   11|  3|   0| 37|2016-12-03 00:37:...|a2aefc67-c97c-48e...|Jack in the Box|        |     CN|2491.93|APPROVED| 20161103|
-  +----------------+-----------+----+-----+---+----+---+--------------------+--------------------+---------------+--------+-------+-------+--------+---------+
-  ```
+
+20/01/10 11:39:17 WARN JdbcUtils: Requested isolation level 1 is not supported; falling back to default isolation level 8
++----------------+-----------+----+-----+---+----+---+--------------------+--------------------+--------------+--------+-------+-------+--------+---------+
+|           cc_no|cc_provider|year|month|day|hour|min|            txn_time|              txn_id|      merchant|location|country| amount|  status|date_text|
++----------------+-----------+----+-----+---+----+---+--------------------+--------------------+--------------+--------+-------+-------+--------+---------+
+|0193000050861128|       0193|2020|    0| 10|  11| 39|2020-01-10 11:39:...|fb3699fe-ffa6-41f...|     SUPERVALU|        |     CN|2678.76|REJECTED| 20200010|
+|0141000023339623|       0141|2020|    0| 10|  11| 39|2020-01-10 11:39:...|cbd8dc59-76d6-418...|Sears Holdings|        |     ID| 160.63|REJECTED| 20200010|
+|3166000054723312|       3166|2020|    0| 10|  11| 39|2020-01-10 11:39:...|d059ce58-5550-440...|  CVS Caremark|        |     ZM|1209.88|APPROVED| 20200010|
+|3065000022321091|       3065|2020|    0| 10|  11| 39|2020-01-10 11:39:...|b03f4ad7-a24b-4ab...|The Home Depot|        |     ET|2480.83|APPROVED| 20200010|
+|1952000011547808|       1952|2020|    0| 10|  11| 39|2020-01-10 11:39:...|ffe30ab9-d742-4a3...|      Walgreen|        |     BR| 2152.1|APPROVED| 20200010|
++----------------+-----------+----+-----+---+----+---+--------------------+--------------------+--------------+--------+-------+-------+--------+---------+
+only showing top 5 rows
+```
 
   Leave this job running to continue to process transactions.
 
   2. At this point you can use NuoSQL to check the number of rows in the Transactions table - you should see that there are records appearing as they are posted by the consumer process:
 
   ```
-  SQL> select count(*) from transactions;
+SQL> select count(*) from transactions;
 
  COUNT
  ------
 
   1962
-  
-  SQL> select * from transactions limit 10;
+
+
+SQL> select * from transactions limit 10;
 
                 TXN_ID                     CC_NO       YEAR  MONTH  DAY         TXN_TIME         AMOUNT  CC_PROVIDER  COUNTRY  DATE_TEXT  HOUR    LOCATION       MERCHANT     MIN            NOTES             STATUS     TAG        USER_ID
  ------------------------------------ ---------------- ----- ------ ---- ----------------------- ------- ------------ -------- ---------- ----- ------------- --------------- ---- -------------------------- -------- ---------- -------------
