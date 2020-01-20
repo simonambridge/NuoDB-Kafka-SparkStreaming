@@ -1,8 +1,6 @@
-# NuoDB Card Fraud Prevention Demo - Streaming Analytics
+# NuoDB - Streaming Analytics Demo
 
 ## Creating and Consuming Transactions
-
-Based on an original creation by Cary Bourgeois. 
 
 This project consists of two elements:
    
@@ -320,4 +318,4 @@ SQL> select * from transactions limit 10;
  2020    1     7    20     35    2020-01-07 20:35:51 96                96                         96               96            100         10000:03:44+0000 |       1414 |         352
   ```
 
-
+<sub>Acknowldegements: Based on the original project, created with Cary Bourgeouis.

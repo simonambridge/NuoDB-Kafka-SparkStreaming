@@ -139,4 +139,4 @@ Follow the Spark streaming installation and set up instructions here: https://gi
 
 
 
-<sub>Acknowldegements: Based on the original project, created with help from Cary Bourgeouis.
+
