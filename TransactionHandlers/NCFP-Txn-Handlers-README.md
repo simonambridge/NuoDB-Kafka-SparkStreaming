@@ -18,9 +18,6 @@ The Transaction consumer, also written in Scala, is a Spark streaming job. This 
 
 - The second part of the Spark consumer job counts the number of records processed each minute, and stores that data to an aggregates table. The only unique aspect of this flow is that the job also reads back from from this table and builds a rolling count of the data. 
 
-<p align="left">
-  <img src="txnchart.png"/>
-</p>
 
 ## Demo Set Up
 
@@ -94,8 +91,10 @@ When you first compile with sbt it may take some time to download the libraries 
 
     ```
     $ sbt clean
-    [info] Set current project to transactionhandlers (in build file:/Users/sambridge/Documents/Projects/GitHub/NuoDB-Card-Fraud-Prevention/TransactionHandlers/)
-    [success] Total time: 0 s, completed 20-Dec-2019 01:20:23
+[info] Loading project definition from /home/ec2-user/NuoDB-Card-Fraud-Prevention/TransactionHandlers/project
+[info] Loading settings from build.sbt ...
+[info] Set current project to transactionhandlers (in build file:/home/ec2-user/NuoDB-Card-Fraud-Prevention/TransactionHandlers/)
+[success] Total time: 0 s, completed 20-Jan-2020 21:26:06
     ```
 
 
@@ -221,9 +220,12 @@ SQL> select count (*) from transactions ;
   $ cd /<NCFP install path>/NCFP/TransactionHandlers
   ```
   
-   Use the spark-submit command to submit a spark job:
+   The spark-submit command is used to submit a spark job - use the consumer.sh script to containing the following:
   ```
-  $ spark-submit --jars /Users/simonambridge/.ivy2/cache/com.typesafe/config/bundles/config-1.3.2.jar --packages org.apache.spark:spark-streaming-kafka_2.11:1.6.3 --class TransactionConsumer consumer/target/scala-2.11/consumer_2.11-0.1.jar
+IVY_PATH=$HOME/.ivy2 export IVY_PATH
+spark-submit --jars $IVY_PATH/cache/com.typesafe/config/bundles/config-1.3.2.jar \
+--packages org.apache.spark:spark-streaming-kafka_2.11:1.6.3 \
+--class TransactionConsumer consumer/target/scala-2.11/consumer_2.11-0.1.jar \
   ```
 
   After some initial output you will see records being consumed from Kafka by Spark:
