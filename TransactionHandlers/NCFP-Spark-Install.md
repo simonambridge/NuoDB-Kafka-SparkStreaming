@@ -151,7 +151,7 @@ connProperties.put("schema", s"${jdbcSchema}")
 ```
 
 
-###  CONNECT TO NUODB VIA JDBC & CREATE A DATAFRAME - FORMAT 1
+###  Connect to NuoDB Via JDBC & Create A Dataframe From  The Players Table  - Format 1
 
 Pass the JDBC parameters explicitly:
 
@@ -273,7 +273,9 @@ Output
 ```
 
 
-## Install Hadoop Native libraries to avoid "WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable" warning
+## Install The Hadoop Native libraries
+
+Follow these steps to avoid "WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable" warning
 
 ```
 $ wget http://apache.mirror.anlx.net/hadoop/common/hadoop-2.7.7/hadoop-2.7.7.tar.gz
