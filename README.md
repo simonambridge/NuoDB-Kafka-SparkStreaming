@@ -29,7 +29,7 @@ This demo uses an installation running on AWS
 
 ## Step 2: Clone the NCFP repository
 
-The first step is to clone this repo to a directory on the machine where you have previously installed NuoDB as described above:
+The first step is to clone this repo to a directory on the machine where you have previously installed NuoDB in Step 1:
 ```
 $ git clone https://github.com/simonambridge/NCFP
 ```
@@ -94,24 +94,19 @@ The roll-up tables are empty at this point - they get populated using the Spark 
 
 Structured Query Language (SQL) allows you to search for data in the database tables that were created above.
 
-For example, get all transactions for a specified card number on a specified day.
+For example, get all transactions for a specified card number.
 ```
-SQL> select t.txn_id, t.cc_no, t.merchant,ti.amount, ti.descr from transactions t inner join transaction_items ti on t.txn_id=ti.txn_id WHERE t.cc_no='1234123412341234' and t.txn_id=ti.txn_id order by t.txn_id;
+ SQL> select txn_id, cc_no, merchant,amount from transactions WHERE cc_no='1234123412341234' order by txn_id;
 
- TXN_ID       CC_NO       MERCHANT  AMOUNT     DESCR
- ------- ---------------- --------- ------- -----------
+                TXN_ID                     CC_NO       MERCHANT  AMOUNT
+ ------------------------------------ ---------------- --------- -------
 
- 098765  1234123412341234 Ted Baker   125   Clothes
- 098765  1234123412341234 Ted Baker   55    Shoes
- 098765  1234123412341234 Ted Baker   25    Fragrance
- 763629  1234123412341234 Nordstrom   125   Trousers
- 763629  1234123412341234 Nordstrom   50    Dress-shirt
- 763629  1234123412341234 Nordstrom   25    T-shirt
-```
+ 62d1be5d-15f3-4d04-88ad-a937a3b49e95 1234123412341234 Ted Baker   200
+ ```
 
 Get transactions by first 6 digits of cc_no and status.
 ```
-SQL> SELECT * FROM transactions where cc_no like '123412%' and status='Rejected';;
+SQL> SELECT * FROM transactions where cc_no like '123412%' and status='Rejected';
 
  TXN_ID       CC_NO       YEAR  MONTH  DAY       TXN_TIME       AMOUNT  CC_PROVIDER  COUNTRY  DATE_TEXT  HOUR    LOCATION    MERCHANT  MIN         NOTES         STATUS     TAG     USER_ID
  ------- ---------------- ----- ------ ---- ------------------- ------- ------------ -------- ---------- ----- ------------- --------- ---- ------------------- -------- ---------- --------
@@ -121,17 +116,10 @@ SQL> SELECT * FROM transactions where cc_no like '123412%' and status='Rejected'
 
 When we start generating some live data we'll be able to analyse up-to-date information.
 
-These samples demonstrate that full, ad-hoc search on any of the transaction fields is possible including amounts, merchants etc.
-
-Queries like this will be used to build the ReST interface. 
-
-You can use SQL to explore the list of provided ReST queries here: https://github.com/simonambridge/NCFP/blob/master/SQL/SQL_Queries.md
-
-
 
 ## Step 4: Analyzing data using NuoDB Spark Analytics
 
-NuoDB provides integration with Spark via the NuoDB JDBC driver to enable analysis of data in-place on the same cluster where the data is ingested and stored. Workloads can be isolated and there is no need to ETL the data.
+NuoDB provides integration with Spark via the NuoDB JDBC driver to enable real-time analysis of data.
 
 
 ### Streaming Analytics
@@ -142,6 +130,7 @@ The streaming analytics element of this application is made up of two parts:
 * A transaction "consumer" - also written in Scala, is a Spark streaming job that 
 (a) consumes the messages put on the Kafka queue, and then 
 (b) parses those messages, evalutes the transaction status and then writes them to the NuoDB table `transactions`. 
+
 It also generates rolling summary lines into the `txn_count_min` table every minute.
 
 Streaming analytics code can be found under the directory `TransactionHandlers/producer` (pre-requisite: make sure you have run the SQL schema create script as described above to create the necessary tables).
