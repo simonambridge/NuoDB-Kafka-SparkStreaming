@@ -1,0 +1,8 @@
+.git
+restRTFAP/node_modules
+TransactionHandlers/target
+TransactionHandlers/consumer/target
+TransactionHandlers/producer/target
+TransactionHandlers/project/target
+TransactionHandlers/.idea
+
