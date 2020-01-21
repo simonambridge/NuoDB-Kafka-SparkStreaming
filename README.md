@@ -28,7 +28,7 @@ This demo will use these technologies:
 This demo uses an installation running on AWS
 
 
-## Step 2: Clone the NCFP repository
+## Step 2: Clone the NuoDB-Kafka-SparkStreaming repository
 
 The first step is to clone this repo to a directory on the machine where you have previously installed NuoDB in Step 1:
 ```
@@ -209,11 +209,11 @@ $ sbt clean
 
 ### Start the Transaction Producer app
 
-From the root directory of the project (`<NCFP install path>/NCFP/TransactionHandlers`) start the producer app:
+From the root directory of the project (`<install path>/NuoDB-Kafka-SparkStreaming/TransactionHandlers`) start the producer app:
   
 Navigate to the TransactionHandlers directory
 ```
-$ cd /<NCFP install path>/NCFP/TransactionHandlers
+$ cd /<install path>/NuoDB-Kafka-SparkStreaming/TransactionHandlers
 ```
 
 Start the producer app:
@@ -292,7 +292,7 @@ SQL> select count (*) from transactions ;
   
   Navigate to the TransactionHandlers directory
   ```
-  $ cd /<NCFP install path>/NCFP/TransactionHandlers
+  $ cd /<install path>/NuoDB-Kafka-SparkStreaming/TransactionHandlers
   ```
   
    The spark-submit command is used to submit a spark job - use the consumer.sh script, containing the following:
