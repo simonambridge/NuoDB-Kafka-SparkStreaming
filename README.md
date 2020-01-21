@@ -68,7 +68,7 @@ The create script also creates some sample data for example:
 
 ```
 INSERT INTO transactions (year, month, day, hour, min, txn_time, cc_no, amount, cc_provider, location, merchant, notes, status, txn_id, user_id, tag)
-VALUES ( 2016, 03, 17, 21, 04, '2016-03-17 21:04:19', '1234123412341234', 200.0, 'VISA','San Francisco', 'Nordstrom', 'asked for discounts', 'Approved', '763629', 'tomdavis', 'Fraudulent');
+VALUES ( 2019, 03, 17, 21, 04, '2019-03-17 21:04:19', '1234123412341234', 200.0, 'VISA','San Francisco', 'Nordstrom', 'asked for discounts', 'Approved', '763629', 'tomdavis', 'Fraudulent');
 ```
 
 ## Simple queries
@@ -78,12 +78,12 @@ The Transactions table is primarily write-oriented - it's the destination table 
 
 The table has a primary key so a typical query would look like this:
 ```
-SQL> SELECT * FROM transactions WHERE cc_no='1234123412341234' and year=2016 and month=3 and day=9;
+SQL> SELECT * FROM transactions WHERE cc_no='1234123412341234' and year=2019 and month=3 and day=9;
 
  TXN_ID       CC_NO       YEAR  MONTH  DAY       TXN_TIME       AMOUNT  CC_PROVIDER  COUNTRY  DATE_TEXT  HOUR  LOCATION  MERCHANT  MIN         NOTES          STATUS     TAG     USER_ID
  ------- ---------------- ----- ------ ---- ------------------- ------- ------------ -------- ---------- ----- --------- --------- ---- -------------------- -------- ---------- --------
 
- 098765  1234123412341234 2016    3     9   2016-03-09 11:04:19   200       VISA      <null>    <null>    11    London   Ted Baker  4   pretty good clothing Approved Suspicious tomdavis
+ 098765  1234123412341234 2019    3     9   2019-03-09 11:04:19   200       VISA      <null>    <null>    11    London   Ted Baker  4   pretty good clothing Approved Suspicious tomdavis
 ```
 The roll-up tables can also be queried - for example transactions for each merchant by day use the dailytxns_bymerchant table.
 
@@ -112,7 +112,7 @@ SQL> SELECT * FROM transactions where cc_no like '123412%' and status='Rejected'
  TXN_ID       CC_NO       YEAR  MONTH  DAY       TXN_TIME       AMOUNT  CC_PROVIDER  COUNTRY  DATE_TEXT  HOUR    LOCATION    MERCHANT  MIN         NOTES         STATUS     TAG     USER_ID
  ------- ---------------- ----- ------ ---- ------------------- ------- ------------ -------- ---------- ----- ------------- --------- ---- ------------------- -------- ---------- --------
 
- 763629  1234123412341234 2016    3     17  2016-03-17 21:04:19   200       VISA      <null>    <null>    21   San Francisco Nordstrom  4   asked for discounts Rejected Fraudulent tomdavis
+ 763629  1234123412341234 2019    3     17  2019-03-17 21:04:19   200       VISA      <null>    <null>    21   San Francisco Nordstrom  4   asked for discounts Rejected Fraudulent tomdavis
 ```
 
 When we start generating some live data we'll be able to analyse up-to-date information.
@@ -342,11 +342,11 @@ SQL> select * from transactions limit 10;
 
   3. Every 60 seconds you will also see the consumer process generate output similar to the following:
 ```
-  Time=Sat Dec 03 00:37:44 GMT 2016
+  Time=Sat Dec 03 00:37:44 GMT 2019
   +----+-----+---+----+------+-------------------+-----------------+-----------+----------------+-----------------+----------+---------------+
   |year|month|day|hour|minute|               time|approved_rate_min|ttl_txn_min|approved_txn_min| approved_rate_hr|ttl_txn_hr|approved_txn_hr|
   +----+-----+---+----+------+-------------------+-----------------+-----------+----------------+-----------------+----------+---------------+
-  |2016|   12|  3|   0|    37|2016-12-03 00:37:44|94.55958549222798|        386|             365|95.27943966146213|     13706|          13059|
+  |2019|   12|  3|   0|    37|2019-12-03 00:37:44|94.55958549222798|        386|             365|95.27943966146213|     13706|          13059|
   +----+-----+---+----+------+-------------------+-----------------+-----------+----------------+-----------------+----------+---------------+
   ```
 
