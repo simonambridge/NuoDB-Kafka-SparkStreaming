@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ * 
+ * Based on the original project, created with Cary Bourgeouis 2016.
  */
 
 import java.sql.Timestamp
