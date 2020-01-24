@@ -1,6 +1,6 @@
 # NuoDB Streaming Data Pipeline Example
 
-How to use modern, real-time, distributed SQL and streaming technologies to build the foudnation for a scalable data pipeline. 
+How to use modern, real-time, distributed SQL and streaming technologies to build the foundation for a scalable data pipeline. 
 This demo will use these technologies:
 
 - NuoDB
