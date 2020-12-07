@@ -261,7 +261,7 @@ SQL> select count(*) from playerstable2;
 ```
 
 
-### WRrite A DataFrame To NuoDB
+### Write A DataFrame To NuoDB
 
 Write the contents of the players dtaframe to NuoDB - overwrite the table playerstable if it exists:
 
