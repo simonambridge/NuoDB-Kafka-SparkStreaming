@@ -100,23 +100,23 @@ NewTransactions
 Test the Producer & Consumer on Topic NewTransactions
 
 Start the CLI producer and then type a few messages into the console to send to the server:
-
+```
 $ $KAFKA_HOME/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic NewTransactions
 >This is a test message
 >End of message
 >
 >^C
 $
-
+```
 Start the CLI consumer to dump out messages to standard output:
-
+```
 $ $KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic NewTransactions --from-beginning
 This is a test message
 End of message
 
 ^CProcessed a total of 3 messages
 $
-
+```
 If you use a different terminal for the producer and consumer you can type messages into the producer terminal and see them appear in the consumer terminal.
 
 For more go [here](http://kafka.apache.org/quickstart)
