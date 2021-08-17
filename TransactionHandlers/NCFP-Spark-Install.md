@@ -233,7 +233,7 @@ SQL> select count(*) from playerstable;
 
 ###  Write The TempTable To NuoDB As PLAYERSTABLE2
 
-Use the write command to create. new table and save the contents of the Sparl temp tavblr playersTable:
+Use the write command to create the new Spark temp table playersTable2:
 
 ```
 scala> spark.table("playersTable")
@@ -263,7 +263,7 @@ SQL> select count(*) from playerstable2;
 
 ### Write A DataFrame To NuoDB
 
-Write the contents of the players dtaframe to NuoDB - overwrite the table playerstable if it exists:
+Write the contents of the players dataframe to NuoDB - overwrite the table playerstable if it exists:
 
 ```
 scala> players.write.format("jdbc")
