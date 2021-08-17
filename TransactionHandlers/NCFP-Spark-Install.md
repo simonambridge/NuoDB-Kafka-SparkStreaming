@@ -135,7 +135,7 @@ import java.sql.Statement;
 ### Set Up Some Variables etc
 
 ```
-val jdbcHostname = "35.177.227.213"
+val jdbcHostname = "123.123.123.123"
 val jdbcPort = 48004
 val jdbcDatabase = "hockey"
 val jdbcUsername = "dba"
