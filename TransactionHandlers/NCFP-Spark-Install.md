@@ -70,7 +70,7 @@ starting org.apache.spark.deploy.master.Master, logging to /opt/spark-2.4.4-bin-
 
 http://localhost:8080/
 or 
-http://35.177.227.213:8080/
+http://[hostname]:8080/
 ```
 Spark Master at spark://ip-172-31-0-207.eu-west-2.compute.internal:7077
 URL: spark://ip-172-31-0-207.eu-west-2.compute.internal:7077
